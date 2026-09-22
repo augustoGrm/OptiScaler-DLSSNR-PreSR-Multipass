@@ -4,6 +4,10 @@ This fork builds on [Dagherbou/OptiScaler_DLSSNR](https://github.com/Dagherbou/O
 
 Colour processing is derived from [RenoDX by clshortfuse](https://github.com/clshortfuse/renodx). See the [RenoDX attribution and licence](../Licenses/RenoDX_ATTRIBUTION.txt) for details.
 
+## Fork contributors
+
+- [@LorisPicariello](https://github.com/LorisPicariello) for investigating and testing RDR2's Finished Picture NR / OptiFG interaction, and for [PR #70](https://github.com/wilsjo2/OptiScaler-DLSSNR-PreSR-Multipass/pull/70), which informed the rewritten finished-picture ordering and subsequent queue-safety work.
+
 ## OptiScaler contributors
 
 These credits are retained from the original OptiScaler README:
