@@ -1077,9 +1077,9 @@ NVSDK_NGX_API NVSDK_NGX_Result NVSDK_NGX_VULKAN_EvaluateFeature(VkCommandBuffer 
     void* originalColor = nullptr;
     InParameters->Get(NVSDK_NGX_Parameter_Color, &originalColor);
     bool nrHandled = false;
-    auto nrColor = !bridged
-                       ? DlssNr::EvaluateBeforeUpscaleVk(InCmdList, InParameters, vkInstance, vkPD, vkDevice, nrHandled, rayReconstruction)
-                       : nullptr;
+    auto nrColor = !bridged ? DlssNr::EvaluateBeforeUpscaleVk(InCmdList, InParameters, vkInstance, vkPD, vkDevice,
+                                                              nrHandled, rayReconstruction)
+                            : nullptr;
     if (nrColor)
         InParameters->Set(NVSDK_NGX_Parameter_Color, (void*) nrColor);
     auto upscaleResult = deviceContext->Evaluate(InCmdList, InParameters);
@@ -1113,8 +1113,8 @@ NVSDK_NGX_API NVSDK_NGX_Result NVSDK_NGX_VULKAN_EvaluateFeature(VkCommandBuffer 
     // feature is what is actually running, and they differ for a frame after any backend change and
     // permanently after a fallback.
     if (upscaleResult && !bridged)
-        DlssNr::EvaluateAfterUpscaleVk(InCmdList, InParameters, vkInstance, vkPD, vkDevice,
-                                      rayReconstruction, nrHandled);
+        DlssNr::EvaluateAfterUpscaleVk(InCmdList, InParameters, vkInstance, vkPD, vkDevice, rayReconstruction,
+                                       nrHandled);
 
     return upscaleResult ? NVSDK_NGX_Result_Success : NVSDK_NGX_Result_Fail;
 }

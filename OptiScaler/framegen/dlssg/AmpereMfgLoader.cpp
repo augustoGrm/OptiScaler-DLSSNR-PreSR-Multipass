@@ -58,8 +58,8 @@ std::string GenerateIniContent()
         std::string resolved = ResolveAutoKernelImage();
         if (resolved != "Auto")
         {
-            LOG_INFO("AmpereMfgLoader: Auto kernel image resolved to {} for GPU: {}",
-                     resolved, IdentifyGpu::getPrimaryGpu().name);
+            LOG_INFO("AmpereMfgLoader: Auto kernel image resolved to {} for GPU: {}", resolved,
+                     IdentifyGpu::getPrimaryGpu().name);
             kernelImg = resolved;
         }
     }
@@ -105,21 +105,22 @@ void TrySetup()
 
     const uint32_t archId = static_cast<uint32_t>(gpu.nvidiaArchInfo.architecture_id);
     const bool isAmpere = IsAmpereArch(archId) || (gpu.name.find("RTX 30") != std::string::npos);
-    const bool isTuring = IsTuringArch(archId) || (gpu.name.find("RTX 20") != std::string::npos || gpu.name.find("GTX 16") != std::string::npos);
+    const bool isTuring = IsTuringArch(archId) || (gpu.name.find("RTX 20") != std::string::npos ||
+                                                   gpu.name.find("GTX 16") != std::string::npos);
 
     if (!isAmpere && !isTuring)
     {
-        s_status.ErrorMessage = std::format(
-            "SM86/SM75 MFG requires an RTX 20 series (Turing) or RTX 30 series (Ampere) GPU. Detected arch 0x{:x} ({}).",
-            archId, gpu.name);
+        s_status.ErrorMessage = std::format("SM86/SM75 MFG requires an RTX 20 series (Turing) or RTX 30 series "
+                                            "(Ampere) GPU. Detected arch 0x{:x} ({}).",
+                                            archId, gpu.name);
         LOG_ERROR("AmpereMfgLoader: {}", s_status.ErrorMessage);
         return;
     }
 
     // Locate dlssg_sm86.dll
     auto basePath = Util::DllPath().parent_path();
-    auto dllPath = std::filesystem::path(cfg->MainDllPath.value_or(basePath.wstring())) /
-                   L"dlssg_sm86" / L"dlssg_sm86.dll";
+    auto dllPath =
+        std::filesystem::path(cfg->MainDllPath.value_or(basePath.wstring())) / L"dlssg_sm86" / L"dlssg_sm86.dll";
     std::error_code fileError;
     if (!std::filesystem::exists(dllPath, fileError))
         dllPath = basePath / L"OptiScaler" / L"dlssg_sm86" / L"dlssg_sm86.dll";

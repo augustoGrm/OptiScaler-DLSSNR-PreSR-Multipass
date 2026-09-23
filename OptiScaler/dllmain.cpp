@@ -1878,7 +1878,8 @@ BOOL APIENTRY DllMain(HMODULE hModule, DWORD ul_reason_for_call, LPVOID lpReserv
             cfg->ForceXeLL.set_volatile_value(false);
             cfg->UseFakenvapi.set_volatile_value(false);
             cfg->FN_ForceReflex.set_volatile_value(ForceReflex::InGame);
-            LOG_INFO("External frame generation: leaving Streamline/Reflex and MFG control to the game or unlocker; NR/SR remain available");
+            LOG_INFO("External frame generation: leaving Streamline/Reflex and MFG control to the game or unlocker; "
+                     "NR/SR remain available");
         }
 
         // Init Kernel proxies

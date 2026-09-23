@@ -21,7 +21,8 @@ Status LastStatus();
 void TrySetup();
 
 /// Formats dlssg_sm86.ini content with Native 0.2.3 specification and strict clamping.
-inline std::string FormatIniContent(int maxFrames, const std::string& kernelImg, int hwBilinear = 0, const std::string& router = "SM86", int logLevel = 1)
+inline std::string FormatIniContent(int maxFrames, const std::string& kernelImg, int hwBilinear = 0,
+                                    const std::string& router = "SM86", int logLevel = 1)
 {
     // Native 0.2.3 strictly requires: MaxGeneratedFrames must be 1, 2 or 3
     if (maxFrames <= 0 || maxFrames > 3)
@@ -53,16 +54,10 @@ inline std::string FormatIniContent(int maxFrames, const std::string& kernelImg,
 }
 
 /// Checks if an architecture ID represents Turing (SM75).
-inline bool IsTuringArch(uint32_t archId)
-{
-    return (archId == 0x00000160) || ((archId & 0xFFF0) == 0x0160);
-}
+inline bool IsTuringArch(uint32_t archId) { return (archId == 0x00000160) || ((archId & 0xFFF0) == 0x0160); }
 
 /// Checks if an architecture ID represents Ampere (SM86).
-inline bool IsAmpereArch(uint32_t archId)
-{
-    return (archId == 0x00000170) || ((archId & 0xFFF0) == 0x0170);
-}
+inline bool IsAmpereArch(uint32_t archId) { return (archId == 0x00000170) || ((archId & 0xFFF0) == 0x0170); }
 
 /// Resolves router string ("SM75" or "SM86") based on architecture ID and GPU name.
 inline std::string ResolveRouter(uint32_t archId, const std::string& gpuName = "")
@@ -75,13 +70,11 @@ inline std::string ResolveRouter(uint32_t archId, const std::string& gpuName = "
     // Fallback: name matching
     if (!gpuName.empty())
     {
-        if (gpuName.find("RTX 20") != std::string::npos ||
-            gpuName.find("GTX 16") != std::string::npos ||
+        if (gpuName.find("RTX 20") != std::string::npos || gpuName.find("GTX 16") != std::string::npos ||
             gpuName.find("Turing") != std::string::npos)
             return "SM75";
 
-        if (gpuName.find("RTX 30") != std::string::npos ||
-            gpuName.find("Ampere") != std::string::npos)
+        if (gpuName.find("RTX 30") != std::string::npos || gpuName.find("Ampere") != std::string::npos)
             return "SM86";
     }
 
@@ -103,6 +96,7 @@ inline std::string ResolveAutoKernelImage(uint32_t archId, const std::string& na
                    name.find("GTX 16") != std::string::npos || name.find("3080 Ti") != std::string::npos ||
                    name.find("3080Ti") != std::string::npos || name.find("Laptop") != std::string::npos ||
                    name.find("Mobile") != std::string::npos
-               ? "PTX" : "Auto";
+               ? "PTX"
+               : "Auto";
 }
 } // namespace AmpereMfgLoader

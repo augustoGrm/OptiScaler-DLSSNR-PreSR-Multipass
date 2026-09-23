@@ -1675,8 +1675,7 @@ void MenuCommon::RenderNrCompareTags()
         return;
 
     const bool swap = config->DlssNrCompareSwap.value_or_default();
-    const float split = mode == 1 ? 0.5f
-                                  : std::clamp(config->DlssNrCompareSplit.value_or_default(), 0.0f, 1.0f);
+    const float split = mode == 1 ? 0.5f : std::clamp(config->DlssNrCompareSplit.value_or_default(), 0.0f, 1.0f);
     const float splitX = split * screen.x;
 
     const float scale = std::clamp(config->DlssNrTagScale.value_or_default(), 0.5f, 5.0f);
@@ -1720,7 +1719,6 @@ void MenuCommon::RenderNrCompareTags()
 void MenuCommon::RenderPerformanceOverlay(RenderMenuContext& ctx)
 {
     RenderNrCompareTags();
-
 
     auto& state = ctx.state;
     auto config = ctx.config;
@@ -3163,17 +3161,16 @@ void MenuCommon::RenderFrameGenerationSelection(RenderMenuContext& ctx)
             else
             {
                 std::string routerStr = AmpereMfgLoader::ResolveRouter();
-                ImGui::TextWrapped("DLL: %s | Router: %s | INI: %s | Loaded: %s",
-                                   status.DllFound ? "found" : "missing",
-                                   routerStr.c_str(),
-                                   status.IniWritten ? "written" : "not written",
+                ImGui::TextWrapped("DLL: %s | Router: %s | INI: %s | Loaded: %s", status.DllFound ? "found" : "missing",
+                                   routerStr.c_str(), status.IniWritten ? "written" : "not written",
                                    status.DllLoaded ? "yes" : "no");
             }
 
             // MaxGeneratedFrames slider
             int maxFrames = config->FGDLSSGAmpereMfgMaxFrames.value_or_default();
             const char* frameLabels[] = { "Capability default (3X)", "1 (2X)", "2 (3X)", "3 (4X)" };
-            const char* currentLabel = (maxFrames >= 0 && maxFrames <= 3) ? frameLabels[maxFrames] : "Capability default (3X)";
+            const char* currentLabel =
+                (maxFrames >= 0 && maxFrames <= 3) ? frameLabels[maxFrames] : "Capability default (3X)";
             if (ImGui::SliderInt("Max Generated Frames##sm86", &maxFrames, 0, 3, currentLabel))
                 config->FGDLSSGAmpereMfgMaxFrames = maxFrames;
             ShowHelpMarker("Advertised maximum (1=2X, 2=3X, 3=4X). The game chooses the actual count.\n"
@@ -3191,10 +3188,11 @@ void MenuCommon::RenderFrameGenerationSelection(RenderMenuContext& ctx)
                 const char* storedOptions[] = { "Auto", "PTX", "Cubin" };
                 config->FGDLSSGAmpereMfgKernelImage = std::string(storedOptions[kernelIdx]);
             }
-            ShowHelpMarker("Auto: resolves to optimal format (PTX on Linux/Proton, RTX 3080 Ti, or Turing).\n"
-                           "PTX: JIT-compiled driver path, recommended for Linux/Proton, RTX 3080 Ti, and RTX 20 series.\n"
-                           "Cubin: precompiled binary, requires exact physical SM match on Windows.\n"
-                           "Save Settings and restart to apply.");
+            ShowHelpMarker(
+                "Auto: resolves to optimal format (PTX on Linux/Proton, RTX 3080 Ti, or Turing).\n"
+                "PTX: JIT-compiled driver path, recommended for Linux/Proton, RTX 3080 Ti, and RTX 20 series.\n"
+                "Cubin: precompiled binary, requires exact physical SM match on Windows.\n"
+                "Save Settings and restart to apply.");
 
             // HardwareBilinear checkbox
             bool hwBilinear = config->FGDLSSGAmpereMfgHardwareBilinear.value_or_default();
@@ -7824,8 +7822,8 @@ void RenderExposureScanIndicator(float alpha)
     }
 
     const ImGuiViewport* vp = ImGui::GetMainViewport();
-    ImGui::SetNextWindowPos(ImVec2(vp->WorkPos.x + vp->WorkSize.x - 12.0f, vp->WorkPos.y + 12.0f),
-                            ImGuiCond_Always, ImVec2(1.0f, 0.0f));
+    ImGui::SetNextWindowPos(ImVec2(vp->WorkPos.x + vp->WorkSize.x - 12.0f, vp->WorkPos.y + 12.0f), ImGuiCond_Always,
+                            ImVec2(1.0f, 0.0f));
     ImGui::SetNextWindowBgAlpha(alpha);
 
     if (ImGui::Begin("DlssNrExposureScan", nullptr,
